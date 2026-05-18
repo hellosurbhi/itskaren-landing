@@ -1,0 +1,807 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Karen AI. Tough love only.</title>
+  <meta name="description" content="An AI dating coach that tells you what your best friend won't. And remembers every person, every pattern, every spiral.">
+  <meta property="og:title" content="Karen AI. Tough love only.">
+  <meta property="og:description" content="An AI dating coach that tells you what your best friend won't. And remembers every person, every pattern, every spiral.">
+  <meta property="og:url" content="https://itskaren.ai">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://itskaren.ai">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💋</text></svg>">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --pink:   #FF2D91;
+      --tomato: #FF3B2F;
+      --orange: #FF6A00;
+      --cobalt: #005FFF;
+      --lemon:  #FFE600;
+      --purple: #6B00FF;
+      --ink:    #1a1a1a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body { font-family: 'Inter', system-ui, sans-serif; overflow-x: hidden; }
+
+    ::selection { background: var(--lemon); color: var(--ink); }
+
+    .frame {
+      height: 100vh;
+      min-height: 560px;
+      scroll-snap-align: start;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* fixed nav across all frames */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 26px 44px;
+      pointer-events: none;
+    }
+
+    .nav-brand {
+      font-family: 'Clash Display', 'Anton', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: white;
+      mix-blend-mode: difference;
+      pointer-events: auto;
+    }
+
+    .nav-pitch {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink);
+      background: var(--lemon);
+      padding: 11px 20px 9px;
+      border-radius: 999px;
+      pointer-events: auto;
+      transition: background .2s, color .2s;
+    }
+
+    .nav-pitch:hover { background: var(--ink); color: var(--lemon); }
+
+    /* =================================
+       FRAME 1: Opening — hot pink
+    ================================= */
+    .f1 { background: var(--pink); justify-content: center; align-items: center; }
+
+    .f1-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 80px 32px 60px;
+    }
+
+    .f1-mark {
+      font-family: 'Clash Display', 'Anton', sans-serif;
+      font-weight: 700;
+      font-size: clamp(72px, 19vw, 310px);
+      line-height: .82;
+      letter-spacing: -.025em;
+      text-transform: uppercase;
+      color: white;
+      user-select: none;
+    }
+
+    .f1-mark .ai { color: var(--lemon); }
+
+    .f1-tagline {
+      margin-top: 28px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: clamp(10px, 1.1vw, 13px);
+      letter-spacing: .38em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.65);
+    }
+
+    .f1-kiss {
+      position: absolute;
+      font-size: clamp(60px, 9vw, 130px);
+      top: 18vh; right: 8vw;
+      transform: rotate(15deg);
+      animation: float 2.8s ease-in-out infinite;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    @keyframes float {
+      0%,100% { transform: rotate(15deg) translateY(0); }
+      50%      { transform: rotate(15deg) translateY(-14px); }
+    }
+
+    .f1-scroll {
+      position: absolute;
+      bottom: 28px; left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,.5);
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .f1-scroll-arrow { animation: bob 1.5s ease-in-out infinite; }
+
+    @keyframes bob {
+      0%,100% { transform: translateY(0); opacity: .5; }
+      50%      { transform: translateY(7px); opacity: 1; }
+    }
+
+    /* =================================
+       FRAME 2: Problem — lemon
+    ================================= */
+    .f2 { background: var(--lemon); justify-content: center; padding: 100px 44px 60px; }
+
+    .f2-inner { max-width: 1400px; margin: 0 auto; width: 100%; }
+
+    .f2-h {
+      font-family: 'Clash Display', 'Anton', sans-serif;
+      font-weight: 700;
+      font-size: clamp(36px, 8vw, 128px);
+      line-height: .88;
+      letter-spacing: -.025em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .f2-h .ul-pink {
+      text-decoration: underline;
+      text-decoration-color: var(--pink);
+      text-decoration-thickness: .08em;
+      text-underline-offset: .06em;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 14px;
+      margin-top: 52px;
+      flex-wrap: wrap;
+    }
+
+    .stat-box {
+      flex: 1;
+      min-width: 180px;
+      background: var(--ink);
+      border-radius: 10px;
+      padding: 28px 30px 24px;
+    }
+
+    .stat-num {
+      font-family: 'Clash Display', 'Anton', sans-serif;
+      font-weight: 700;
+      font-size: clamp(44px, 6.5vw, 88px);
+      line-height: 1;
+      display: block;
+    }
+
+    .stat-label {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.5);
+      margin-top: 10px;
+    }
+
+    .stat-box:nth-child(1) .stat-num { color: var(--lemon); }
+    .stat-box:nth-child(2) .stat-num { color: var(--pink); }
+    .stat-box:nth-child(3) .stat-num { color: var(--tomato); }
+
+    /* =================================
+       FRAME 3: Karen's Voice — cobalt
+    ================================= */
+    .f3 { background: var(--cobalt); justify-content: center; padding: 100px 44px 100px; }
+
+    .f3-inner { max-width: 1100px; margin: 0 auto; width: 100%; }
+
+    .f3-line {
+      display: block;
+      font-family: 'Clash Display', 'Anton', sans-serif;
+      font-weight: 700;
+      font-size: clamp(36px, 7.5vw, 118px);
+      line-height: .88;
+      letter-spacing: -.025em;
+      text-transform: uppercase;
+      color: white;
+    }
+
+    .f3-line.c-pink  { color: var(--pink); }
+    .f3-line.c-lemon { color: var(--lemon); }
+
+    .f3-scribble {
+      position: absolute;
+      bottom: 44px; right: 44px;
+      font-family: 'Caveat', cursive;
+      font-weight: 700;
+      font-size: clamp(30px, 4.5vw, 68px);
+      color: var(--lemon);
+      transform: rotate(-5deg);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    /* =================================
+       FRAME 4: What She Does — tomato
+    ================================= */
+    .f4 { background: var(--tomato); justify-content: center; padding: 100px 44px 60px; }
+
+    .f4-inner { max-width: 1200px; margin: 0 auto; width: 100%; }
+
+    .f4-h {
+      font-family: 'Clash Display', 'Anton', sans-serif;
+      font-weight: 700;
+      font-size: clamp(30px, 6.5vw, 96px);
+      line-height: .9;
+      letter-spacing: -.025em;
+      text-transform: uppercase;
+      color: white;
+      margin-bottom: 56px;
+    }
+
+    .f4-h s {
+      text-decoration-color: var(--lemon);
+      text-decoration-thickness: .1em;
+    }
+
+    .f4-h .accent { color: var(--lemon); }
+
+    .feature-list { border-top: 1.5px solid rgba(255,255,255,.22); }
+
+    .feature-row {
+      display: flex;
+      gap: 40px;
+      align-items: baseline;
+      padding: 26px 0;
+      border-bottom: 1.5px solid rgba(255,255,255,.22);
+    }
+
+    .feature-name {
+      font-family: 'Clash Display', 'Anton', sans-serif;
+      font-weight: 700;
+      font-size: clamp(22px, 3.5vw, 52px);
+      letter-spacing: -.01em;
+      text-transform: uppercase;
+      color: var(--lemon);
+      width: 240px;
+      flex-shrink: 0;
+    }
+
+    .feature-desc {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: clamp(14px, 1.5vw, 19px);
+      color: rgba(255,255,255,.8);
+      line-height: 1.45;
+    }
+
+    /* =================================
+       FRAME 5: One-Liner — purple
+    ================================= */
+    .f5 {
+      background: var(--purple);
+      justify-content: center;
+      align-items: center;
+      padding: 100px 44px;
+    }
+
+    .f5-block {
+      max-width: 1100px;
+      margin: 0 auto;
+      transform: rotate(-1.5deg);
+    }
+
+    .f5-quote {
+      font-family: 'Clash Display', 'Anton', sans-serif;
+      font-weight: 700;
+      font-size: clamp(28px, 6.5vw, 96px);
+      line-height: .9;
+      letter-spacing: -.025em;
+      text-transform: uppercase;
+      color: white;
+    }
+
+    .f5-attr {
+      display: block;
+      margin-top: 28px;
+      font-family: 'Caveat', cursive;
+      font-weight: 700;
+      font-size: clamp(26px, 3.2vw, 50px);
+      color: var(--lemon);
+      line-height: 1;
+    }
+
+    /* =================================
+       FRAME 6: Founder — orange
+    ================================= */
+    .f6 { background: var(--orange); justify-content: center; padding: 100px 44px 60px; }
+
+    .f6-inner { max-width: 1200px; margin: 0 auto; width: 100%; }
+
+    .f6-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--ink);
+      opacity: .6;
+      margin-bottom: 10px;
+    }
+
+    .f6-name {
+      font-family: 'Clash Display', 'Anton', sans-serif;
+      font-weight: 700;
+      font-size: clamp(80px, 18vw, 260px);
+      line-height: .82;
+      letter-spacing: -.035em;
+      text-transform: uppercase;
+      color: white;
+      margin-bottom: 28px;
+    }
+
+    .chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+
+    .chip {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--lemon);
+      padding: 10px 16px 8px;
+      border-radius: 6px;
+    }
+
+    .f6-h {
+      font-family: 'Clash Display', 'Anton', sans-serif;
+      font-weight: 700;
+      font-size: clamp(24px, 4vw, 60px);
+      line-height: .92;
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 18px;
+    }
+
+    .f6-sub {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      font-size: clamp(15px, 1.6vw, 20px);
+      color: var(--ink);
+      opacity: .72;
+      max-width: 58ch;
+      line-height: 1.5;
+      margin-bottom: 32px;
+    }
+
+    .pitch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--lemon);
+      background: var(--ink);
+      padding: 16px 28px 14px;
+      border-radius: 999px;
+      transition: background .2s, color .2s;
+    }
+
+    .pitch-btn:hover { background: white; color: var(--ink); }
+
+    /* =================================
+       FRAME 7: Get In — hot pink
+    ================================= */
+    .f7 {
+      background: var(--pink);
+      justify-content: center;
+      align-items: center;
+      padding: 100px 44px 60px;
+      text-align: center;
+    }
+
+    .f7-inner { max-width: 760px; margin: 0 auto; width: 100%; }
+
+    .f7-h {
+      font-family: 'Clash Display', 'Anton', sans-serif;
+      font-weight: 700;
+      font-size: clamp(42px, 9.5vw, 144px);
+      line-height: .84;
+      letter-spacing: -.025em;
+      text-transform: uppercase;
+      color: white;
+      margin-bottom: 12px;
+    }
+
+    .f7-scribble {
+      display: block;
+      font-family: 'Caveat', cursive;
+      font-weight: 700;
+      font-size: clamp(28px, 4vw, 58px);
+      color: var(--lemon);
+      transform: rotate(-2.5deg);
+      margin-bottom: 52px;
+    }
+
+    .bd-form {
+      display: flex;
+      border: 2.5px solid white;
+      border-radius: 999px;
+      overflow: hidden;
+      max-width: 580px;
+      margin: 0 auto;
+      background: transparent;
+    }
+
+    .bd-form input[type="email"] {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 17px;
+      font-weight: 500;
+      padding: 20px 24px;
+    }
+
+    .bd-form input::placeholder { color: rgba(255,255,255,.42); font-style: italic; }
+
+    .bd-form button {
+      flex-shrink: 0;
+      border: none;
+      background: var(--ink);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      padding: 0 30px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .2s, color .2s;
+    }
+
+    .bd-form button:hover { background: var(--lemon); color: var(--ink); }
+
+    .f7-success {
+      display: none;
+      font-family: 'Clash Display', 'Anton', sans-serif;
+      font-weight: 700;
+      font-size: clamp(22px, 3.5vw, 52px);
+      text-transform: uppercase;
+      letter-spacing: -.01em;
+      color: var(--lemon);
+      max-width: 580px;
+      margin: 0 auto;
+    }
+
+    .f7-beta {
+      margin-top: 18px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.42);
+    }
+
+    .site-footer {
+      margin-top: 48px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.36);
+    }
+
+    .site-footer a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,.2);
+      transition: color .2s, border-color .2s;
+    }
+
+    .site-footer a:hover { color: rgba(255,255,255,.7); border-color: rgba(255,255,255,.5); }
+
+    /* =================================
+       REVEAL ANIMATIONS
+    ================================= */
+    .rev {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .72s cubic-bezier(.22,1,.36,1),
+                  transform .72s cubic-bezier(.22,1,.36,1);
+    }
+
+    .rev-scale {
+      opacity: 0;
+      transform: scale(.88) translateY(14px);
+      transition: opacity .85s cubic-bezier(.22,1,.36,1),
+                  transform .85s cubic-bezier(.22,1,.36,1);
+    }
+
+    .rev.in, .rev-scale.in { opacity: 1; transform: none; }
+
+    .d1 { transition-delay: .10s; }
+    .d2 { transition-delay: .22s; }
+    .d3 { transition-delay: .36s; }
+    .d4 { transition-delay: .50s; }
+    .d5 { transition-delay: .65s; }
+    .d6 { transition-delay: .80s; }
+
+    /* =================================
+       RESPONSIVE
+    ================================= */
+    @media (max-width: 800px) {
+      .site-nav { padding: 20px 24px; }
+      .f1-kiss { top: 70px; right: 20px; }
+      .f2, .f3, .f4, .f5, .f6, .f7 { padding: 80px 24px 48px; }
+      .stat-row { flex-direction: column; }
+      .feature-row { flex-direction: column; gap: 6px; }
+      .feature-name { width: auto; }
+      .f3-scribble { bottom: 24px; right: 24px; }
+      .f5-block { transform: none; }
+    }
+
+    @media (max-width: 480px) {
+      .bd-form { flex-direction: column; border-radius: 14px; }
+      .bd-form input[type="email"] { border-bottom: 1.5px solid rgba(255,255,255,.28); padding: 18px 20px; }
+      .bd-form button { padding: 18px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Fixed nav -->
+<nav class="site-nav" aria-label="Site navigation">
+  <a class="nav-brand" href="#top">Karen AI ♥</a>
+  <a class="nav-pitch" href="#pitch-deck" target="_blank" rel="noopener">Pitch Deck</a>
+</nav>
+
+<!-- Frame 1: Opening -->
+<section class="frame f1" id="top">
+  <span class="f1-kiss" aria-hidden="true">💋</span>
+
+  <div class="f1-inner">
+    <h1 class="f1-mark rev-scale">KAREN <span class="ai">AI.</span></h1>
+    <p class="f1-tagline rev d2">Relationship intelligence for modern daters</p>
+  </div>
+
+  <div class="f1-scroll" aria-hidden="true">
+    <span>Scroll</span>
+    <span class="f1-scroll-arrow">↓</span>
+  </div>
+</section>
+
+<!-- Frame 2: The Problem -->
+<section class="frame f2">
+  <div class="f2-inner">
+    <h2 class="f2-h">
+      <span class="rev" style="display:block">Dating apps make money</span>
+      <span class="rev d1" style="display:block">when you keep swiping.</span>
+      <span class="rev d2" style="display:block">Not when you <span class="ul-pink">find someone.</span></span>
+    </h2>
+
+    <div class="stat-row">
+      <div class="stat-box rev d3">
+        <span class="stat-num">-21%</span>
+        <span class="stat-label">Bumble paying users Q1 2026</span>
+      </div>
+      <div class="stat-box rev d4">
+        <span class="stat-num">$213/mo</span>
+        <span class="stat-label">Average spend on dating</span>
+      </div>
+      <div class="stat-box rev d5">
+        <span class="stat-num">79%</span>
+        <span class="stat-label">Of Gen Z report burnout</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Frame 3: Karen's Voice -->
+<section class="frame f3">
+  <div class="f3-inner">
+    <span class="f3-line rev">You keep texting</span>
+    <span class="f3-line c-pink rev d1">him at 1am.</span>
+    <span class="f3-line rev d2">You call it</span>
+    <span class="f3-line rev d3">chemistry.</span>
+    <span class="f3-line c-lemon rev d4">Karen calls it</span>
+    <span class="f3-line c-lemon rev d5">a pattern.</span>
+  </div>
+  <span class="f3-scribble rev d6" aria-hidden="true">tough love only.</span>
+</section>
+
+<!-- Frame 4: What She Does -->
+<section class="frame f4">
+  <div class="f4-inner">
+    <h2 class="f4-h rev">
+      She doesn't find you <s>matches</s>.<br>
+      She makes you a <span class="accent">better dater.</span>
+    </h2>
+
+    <div class="feature-list">
+      <div class="feature-row rev d1">
+        <span class="feature-name">Voice-first</span>
+        <span class="feature-desc">Talk about your date. She remembers it all.</span>
+      </div>
+      <div class="feature-row rev d2">
+        <span class="feature-name">Total memory</span>
+        <span class="feature-desc">Every person, every pattern, every spiral.</span>
+      </div>
+      <div class="feature-row rev d3">
+        <span class="feature-name">Pattern eyes</span>
+        <span class="feature-desc">She sees the loops you keep falling into. Then she calls them out.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Frame 5: The One-Liner -->
+<section class="frame f5">
+  <div class="f5-block">
+    <blockquote class="f5-quote rev-scale">
+      "You don't have chemistry.<br>
+      You have a trauma response.<br>
+      There's a difference."
+    </blockquote>
+    <span class="f5-attr rev d2">Karen, after date 3 with the chef</span>
+  </div>
+</section>
+
+<!-- Frame 6: The Founder -->
+<section class="frame f6">
+  <div class="f6-inner">
+    <p class="f6-eyebrow rev">The founder</p>
+    <h2 class="f6-name rev d1">Surbhi</h2>
+
+    <div class="chip-row">
+      <span class="chip rev d2">100K+ followers</span>
+      <span class="chip rev d3">200+ couples matched</span>
+      <span class="chip rev d4">Sold out weekly</span>
+      <span class="chip rev d5">$0 paid spend</span>
+    </div>
+
+    <h3 class="f6-h rev d2">
+      Built by the founder of<br>NYC's biggest dating show.
+    </h3>
+
+    <p class="f6-sub rev d3">
+      She lives the problem. She studies it for a living. She ships it herself.
+    </p>
+
+    <a class="pitch-btn rev d4" href="#pitch-deck" target="_blank" rel="noopener">
+      Read the pitch deck ↗
+    </a>
+  </div>
+</section>
+
+<!-- Frame 7: Get In -->
+<section class="frame f7">
+  <div class="f7-inner">
+    <h2 class="f7-h rev">
+      Get the tough love<br>you've been avoiding.
+    </h2>
+
+    <span class="f7-scribble rev d1">she's waiting.</span>
+
+    <form class="bd-form rev d2" id="bdForm"
+      action="https://buttondown.com/api/emails/embed-subscribe/itskaren"
+      method="post">
+      <input type="email" name="email" placeholder="your@email.com" required>
+      <button type="submit" id="bdBtn">Get on the list</button>
+    </form>
+
+    <p class="f7-success" id="f7Success">You're in. Karen will be in touch.</p>
+
+    <p class="f7-beta rev d3">Private beta &middot; iOS &middot; First 500 from the show</p>
+
+    <footer class="site-footer rev d4">
+      <a href="mailto:hello@itskaren.ai">hello@itskaren.ai</a>
+      &nbsp;&middot;&nbsp;
+      itskaren.ai
+      &nbsp;&middot;&nbsp;
+      &copy; 2026
+    </footer>
+  </div>
+</section>
+
+<script>
+(function () {
+  /* Scroll reveal */
+  var els = document.querySelectorAll('.rev, .rev-scale');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { rootMargin: '-5% 0px -5% 0px', threshold: 0.05 });
+  els.forEach(function (el) { io.observe(el); });
+
+  /* Buttondown form */
+  var form    = document.getElementById('bdForm');
+  var success = document.getElementById('f7Success');
+  var btn     = document.getElementById('bdBtn');
+
+  function showSuccess() {
+    form.style.display    = 'none';
+    success.style.display = 'block';
+    try { localStorage.setItem('karen.waitlist', '1'); } catch (_) {}
+  }
+
+  try {
+    if (localStorage.getItem('karen.waitlist')) showSuccess();
+  } catch (_) {}
+
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = form.querySelector('input[type="email"]').value;
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      fetch(form.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ email: email }),
+        mode: 'no-cors'
+      }).catch(function () {}).finally(function () {
+        showSuccess();
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>
