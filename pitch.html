@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Karen AI. Pitch Deck.</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💋</text></svg>">
+
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --pink:   #FF2D91;
+      --lemon:  #FFE600;
+      --purple: #6B00FF;
+      --ink:    #1a1a1a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--purple);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    ::selection { background: var(--lemon); color: var(--ink); }
+
+    .back {
+      position: fixed;
+      top: 28px; left: 40px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: rgba(255,255,255,.45);
+      transition: color .2s;
+    }
+
+    .back:hover { color: rgba(255,255,255,.9); }
+
+    .wordmark {
+      font-family: 'Clash Display', 'Anton', sans-serif;
+      font-weight: 700;
+      font-size: clamp(56px, 12vw, 180px);
+      line-height: .84;
+      letter-spacing: -.025em;
+      text-transform: uppercase;
+      color: white;
+      user-select: none;
+      margin-bottom: 8px;
+    }
+
+    .wordmark .ai { color: var(--lemon); }
+
+    .sub {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.45);
+      margin-bottom: 56px;
+    }
+
+    .gate {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .pw-wrap {
+      display: flex;
+      width: 100%;
+      border: 2px solid rgba(255,255,255,.35);
+      border-radius: 999px;
+      overflow: hidden;
+      transition: border-color .2s;
+    }
+
+    .pw-wrap:focus-within { border-color: var(--lemon); }
+
+    .pw-wrap.error { border-color: var(--pink); animation: shake .35s ease; }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%      { transform: translateX(-8px); }
+      40%      { transform: translateX(8px); }
+      60%      { transform: translateX(-5px); }
+      80%      { transform: translateX(5px); }
+    }
+
+    .pw-input {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 17px;
+      font-weight: 500;
+      padding: 18px 22px;
+      letter-spacing: .08em;
+    }
+
+    .pw-input::placeholder { color: rgba(255,255,255,.3); font-style: italic; }
+
+    .pw-btn {
+      flex-shrink: 0;
+      border: none;
+      background: var(--lemon);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      padding: 0 28px;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+      white-space: nowrap;
+    }
+
+    .pw-btn:hover { background: white; }
+
+    .err-msg {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--pink);
+      opacity: 0;
+      transition: opacity .25s;
+      height: 18px;
+    }
+
+    .err-msg.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <a class="back" href="/">← itskaren.ai</a>
+
+  <p class="wordmark">KAREN <span class="ai">AI.</span></p>
+  <p class="sub">Pitch deck &middot; Confidential</p>
+
+  <form class="gate" id="gateForm">
+    <div class="pw-wrap" id="pwWrap">
+      <input
+        class="pw-input"
+        id="pwInput"
+        type="password"
+        placeholder="password"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        required
+      >
+      <button class="pw-btn" type="submit">Open</button>
+    </div>
+    <p class="err-msg" id="errMsg">wrong password.</p>
+  </form>
+
+  <script>
+    var DECK_URL = 'https://drive.google.com/file/d/PLACEHOLDER/view';
+    var PASSWORD = 'karen-ai';
+
+    var form   = document.getElementById('gateForm');
+    var input  = document.getElementById('pwInput');
+    var wrap   = document.getElementById('pwWrap');
+    var errMsg = document.getElementById('errMsg');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (input.value === PASSWORD) {
+        window.location.href = DECK_URL;
+      } else {
+        wrap.classList.add('error');
+        errMsg.classList.add('show');
+        input.value = '';
+        input.focus();
+        setTimeout(function () {
+          wrap.classList.remove('error');
+        }, 400);
+      }
+    });
+
+    input.addEventListener('input', function () {
+      errMsg.classList.remove('show');
+    });
+  </script>
+</body>
+</html>
