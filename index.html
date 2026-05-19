@@ -572,13 +572,25 @@
       .site-nav { padding: 18px 22px; }
       .f1-kiss { top: 64px; right: 18px; }
       .f2, .f3, .f4, .f5, .f6, .f7 { padding: 64px 22px 36px; }
+      .f6 { padding: 0 0 36px; }
       .stat-row { flex-direction: column; }
       .feature-row { flex-direction: column; gap: 4px; }
       .feature-name { width: auto; }
       .f3-scribble { bottom: 20px; right: 22px; }
       .f5-block { transform: none; }
-      .f6-grid { grid-template-columns: 1fr; gap: 24px; }
-      .f6-photo { width: 200px; order: -1; }
+      .f6-grid { display: block; }
+      .f6-photo { width: 100%; order: -1; }
+      .f6-photo img {
+        width: 100%;
+        height: 52vw;
+        max-height: 260px;
+        border-radius: 0;
+        border: none;
+        transform: none;
+        aspect-ratio: unset;
+      }
+      .f6-text { padding: 20px 22px 0; }
+      .f6-name { font-size: clamp(56px, 20vw, 100px); }
     }
 
     @media (max-width: 480px) {
