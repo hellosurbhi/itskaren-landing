@@ -772,8 +772,11 @@
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams({ email: email }),
         mode: 'no-cors'
-      }).catch(function () {}).finally(function () {
+      }).then(function () {
         showSuccess();
+      }).catch(function () {
+        btn.textContent = 'Get on the list';
+        btn.disabled = false;
       });
     });
   }
